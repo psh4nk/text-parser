@@ -27,15 +27,15 @@ my $sylcount = 0;
 
 # Count words
 while(<INFILE>){
-    push(@words, $_);
-    $wordcount++;
+    push(@words, $_);        # put strings from file into words scalar
+    $wordcount++;            # inc wordcount
 }
 
 seek INFILE, 0, 0;           # go back to start of file
 
 my $text = do { local $/; <INFILE> };
 ++$sentcount while $text =~ /[.!?;:]+/g;                # use regex to count sentences
-++$sylcount while $text =~ /(?!e[ds]?$)[aeiouy]+/g;     # use regex to coun syllables
+++$sylcount while $text =~ /(?!e[ds]?$)[aeiouy]+/g;     # use regex to count syllables
 
 close INFILE or die "Cannot close $ARGV[0]: $!";        # close the file
 

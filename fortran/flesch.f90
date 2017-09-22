@@ -61,12 +61,12 @@ subroutine read_file( string, counter )
     integer :: counter
     character (LEN=1) :: input
 
-    open (unit=5,status="old",access="direct",form="unformatted",recl=1,file="KJV.txt")
+    open (unit=5,status="old",access="direct",form="unformatted",recl=1,file="KJV.txt") ! open the file
     counter=1
-    100 read (5,rec=counter,err=200) input
-    string(counter:counter) = input
-    counter=counter+1
-    goto 100
+    100 read (5,rec=counter,err=200) input      ! read the file
+    string(counter:counter) = input             
+    counter=counter+1                           ! count the chars
+    goto 100                                    ! loop back to 100
     200 continue
     counter=counter-1
 
