@@ -5,6 +5,7 @@
 #include <cmath>
 #include <cstring>
 #include <sstream>
+#include <iomanip>
 
 using namespace std;
 
@@ -52,23 +53,17 @@ double countSyllables(double &sCount, vector<string> &wordArr){
     for(int j = 0; j < wordArr.size(); j++){ 
         string check = wordArr[j];
         syllables = 0;
-        for(int i = 0; i < check.length(); i++){
-         
-            //cout << "Current word: " << check << endl;
-            //cout << "Char at " << i << " is: " << check[check.length() - 1] << endl;
-            
+        for(int i = 0; i < check.length(); i++){     
             if(check[check.length() - 1] == 'e' && syllables > 1){
-                //cout << "Last char: " << check[check.length() - 1] << endl;
                 syllables--;
             }
             if(isVowel(check[i]) && !isVowel(check[i+1]) && !isEndofSent(check[i+1])){
                 syllables++;
             }
         }
-        //cout << "This word has " << syllables << " syllables\n";
         sCount += syllables;
     }
- 
+
     return sCount; 
 }
 
@@ -83,7 +78,6 @@ int countSentences(string filename, vector<string> sentArr){
             count++;
         }
     }
-    cout << "Sentences: " << count << "\n";
     return count;
 }
 
@@ -98,7 +92,7 @@ bool isNum(string str){
                 str.find('7') != std::string::npos ||
                 str.find('8') != std::string::npos ||
                 str.find('9') != std::string::npos) &&
-                !isAlphabetic(str)){
+            !isAlphabetic(str)){
         return true;
     }
 
@@ -120,8 +114,6 @@ double getAlpha(string filename, vector<string> wordArr){
         }
     }
     syllables = countSyllables(sCount, wordArr);
-    cout << "Words: " << count << "\n";
-    cout << "Syllables: " << syllables << "\n";
     alpha = syllables / count;
     return alpha;
 }
@@ -157,10 +149,9 @@ int main(int argc, char *argv[]){
     vector <string> sentArr;
     alpha = getAlpha(filename, wordArr);
     beta = countWords(filename, wordArr) / countSentences(filename, sentArr);
-    cout << "Alpha: " << alpha << ", Beta: " << beta << "\n";
     index = 206.835 - alpha*84.6 - beta*1.015;
-    gindex = alpha*11.8 + beta*0.39 - 15.59;
+    gindex = round((alpha*11.8 + beta*0.39 - 15.59) * 10.0) / 10.0;
     cout << "Index = " << round(index) << "\n";
-    cout << "Grade Level Index = " << /*floor(gindex * 10.00 + 0.5) / 10.00*/ gindex << "\n";
+    cout << "Grade Level Index = " << gindex << "\n";
     return 0;
 }

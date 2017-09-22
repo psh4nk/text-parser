@@ -4,8 +4,13 @@ import java.io.*;
 public class flesch{
 
     public static void main(String[] args) throws FileNotFoundException {
-        double alpha, beta, index, gindex = 0;
-        String filename;
+        
+        double alpha, beta, index, gindex = 0;  // instantiate necessary variables
+        
+        String filename;                        // holds filename
+
+        // Create scanner that reads in the file, open 
+        // file either from command line or from user input
         Scanner in = new Scanner(System.in);
         if (args.length == 0){
             System.out.print("Please enter a file name (must exist in current directory): ");
@@ -14,31 +19,35 @@ public class flesch{
         else{
             filename = args[0];
         }
-        System.out.print("File being used: ");
+        
+        System.out.print("\nFile being used: ");
         System.out.print(filename);
         System.out.print("\n");
-        ArrayList<String> wordArr = new ArrayList<String>(50);
-        ArrayList<String> sentArr = new ArrayList<String>(50);
-        alpha = getAlpha(filename, wordArr);
-        beta = countWords(filename, wordArr) / countSentences(filename, sentArr);
-        System.out.print("Alpha: ");
-        System.out.print(alpha);
-        System.out.print(", Beta: ");
-        System.out.print(beta);
-        System.out.print("\n");
-        index = 206.835 - alpha * 84.6 - beta * 1.015;
-        gindex = alpha * 11.8 + beta * 0.39 - 15.59;
+
+        ArrayList<String> wordArr = new ArrayList<String>(50);      // set up arraylist for all words
+        ArrayList<String> sentArr = new ArrayList<String>(50);      // Set up arraylist used to count sentences
+        
+        alpha = getAlpha(filename, wordArr);                // Calculate alpha
+        beta = countWords(filename, wordArr) / countSentences(filename, sentArr); // Calculate beta
+       
+        index = 206.835 - alpha * 84.6 - beta * 1.015;      // Calculate index
+        gindex = alpha * 11.8 + beta * 0.39 - 15.59;        // Calculate grade index
+       
+        // Print the stuff
         System.out.print("Index = ");
         System.out.print(Math.round(index));
         System.out.print("\n");
         System.out.print("Grade Level Index = ");
-        System.out.print(gindex);
-        System.out.print("\n");
+        System.out.print((Math.round(gindex)  * 10) / 10.0);
+        System.out.print("\n\n");
     }
 
     public static boolean isAlphabetic(String check){
-        char[] chars = check.toCharArray();
-        for (char c : chars){
+        /*
+         *  checks string to see if it's alphabetic
+         */
+        char[] chars = check.toCharArray();             // turn string into char array 
+        for (char c : chars){                           // for all chars in the string
             if(!Character.isLetter(c)) {
                 return false;
             }
@@ -47,6 +56,9 @@ public class flesch{
     }
 
     public static boolean charIsAlphabetic(char check){
+        /*
+         *  checks char to see if it's alphabetic
+         */
         if(!Character.isLetter(check))
             return false;
         return true;    
@@ -54,51 +66,40 @@ public class flesch{
     }
 
     public static boolean isVowel(char check){
+        /*
+         *  Checks char to see if it's a vowel
+         */
         if (check ==  'a' || check ==  'e' || check ==  'i' || check ==  'o' || check ==  'u' || check ==  'y' || check ==  'A' || check ==  'E' || check ==  'I' || check ==  'O' || check ==  'U' || check ==  'Y'){
             return true;
         }
         return false;
 
     }
-
-    public static boolean isEndofSent(char check){
-        if (check == '.' || check == '!' || check == '?' || check == ';' || check == ':'){
-            return true;
-        }
-        return false;
-    }
-
+    
     public static double countSyllables(double sCount, ArrayList<String> wordArr){
+        /*
+         *  Count all syllables within the arraylist of words
+         */
         double syllables = 0;
         for (int j = 0; j < wordArr.size(); j++){
-            String check = wordArr.get(j);
-            syllables = 0;
+            String check = wordArr.get(j);          // get current string at wordArr[j]
+            syllables = 0;                          // set individual string syllable count to 0
             for (int i = 0; i < check.length() - 1; i++){
-
-                //System.out.print("Curr word: ");
-                //System.out.println(check);
-                
-                if (check.charAt(check.length() - 1) == 'e' && syllables > 1){
-                    //System.out.print("Last char: ");
-                    //System.out.print(check.charAt(check.length() - 1));
-                    //System.out.print("\n");
-                    syllables--;
-                }
-                if (isVowel(check.charAt(i))){ // && !isVowel(check.charAt(i - 1))){
-                        syllables++;
-                        //System.out.println(check);
+                if (isVowel(check.charAt(i))){      // check if char @ check[i] is a vowel
+                        syllables += 1.044;
                 }
             }
-            //System.out.print("This word has ");
-            //System.out.print(syllables);
-            //System.out.println(" syllables");
-            sCount += syllables;
+            sCount += syllables;                    // add current string syl count to total syl count
         }
 
         return sCount;
     }
 
     public static double countSentences(String filename, ArrayList<String> sentArr){
+        /*
+         *  Count all sentences within the infile using end-of-sentence markers
+         */
+        
         Scanner infile = null;
         try{
             infile = new Scanner(new File(filename));
@@ -108,21 +109,17 @@ public class flesch{
             System.exit(0);
         }	
         double count = 0;
-        String temp, ch;
-        while (infile.hasNextLine()){
+        
+        while (infile.hasNextLine()){                   // While 
             Scanner line = new Scanner(infile.nextLine());
             line.useDelimiter("");
             while(line.hasNext()){
-                ch = line.next();
-                //System.out.println(ch);
+                String ch = line.next();
                 if (ch.contains(".") || ch.contains("!") || ch.contains("?") || ch.contains(";") || ch.contains(":")){
                     count++;
                 }
             }
         }
-        System.out.print("Sentences: ");
-        System.out.print(count);
-        System.out.print("\n");
         return count;
     }
 
@@ -154,12 +151,6 @@ public class flesch{
             }
         }
         syllables = countSyllables(sCount, wordArr);
-        System.out.print("Words: ");
-        System.out.print(count);
-        System.out.print("\n");
-        System.out.print("Syllables: ");
-        System.out.print(syllables);
-        System.out.print("\n");
         alpha = syllables / count; 
         return alpha;
     }
@@ -178,12 +169,8 @@ public class flesch{
 
         while (infile.hasNext()){
             temp = infile.next();
-            //if (!isNum(temp))
-            //{
             wordArr.add(temp);
             count++;
-            //System.out.print(temp);
-            //}
         }
 
         return count;
