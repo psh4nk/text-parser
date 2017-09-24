@@ -81,18 +81,18 @@ public class flesch
      *  Count all syllables within the arraylist of words
      */
         String input = word.toLowerCase(); // convert string to lower case
-        int syllables = 0, eSatEnd=0;       
+        int syllables = 0, eAtEnd=0;       
 
         int i = input.length() - 1;         // set i to length-1 to not go out of bounds
 
         // count all the e's in the end
         while (i >= 0 && input.charAt(i) == 'e') {
             i--;
-            eSatEnd++;
+            eAtEnd++;
         }
         
         // if there's an e at the end, there's automatically one syllable in the word
-        if (eSatEnd == 1) {
+        if (eAtEnd == 1) {
             syllables = 1;
         }
 

@@ -46,22 +46,25 @@ program reader
     alpha = syllables / words;                          ! calc alpha
     beta  = words / sents;                              ! calc beta
     index = 206.835 - alpha * 84.6 - beta * 1.015;      ! calc index
-    gradeindex = alpha * 11.8 + beta * 0.39 - 15.59;    ! calc grade index
-    !print *, "Index: ", index;                         ! print the stuff
-    6 format("Index: ", f5.0);                          ! set up index to be truncated
-    5 format("Grade Index: ", f5.1);                    ! set up grade index to be truncated
+    gradeindex = alpha * 11.8 + beta * 0.39 - 15.59;    ! calc grade index 
+    6 format(" Index: ", f5.0);                          ! set up index to be truncated
+    5 format(" Grade Index: ", f5.1);                    ! set up grade index to be truncated
     print 6,  index;                                    ! print but truncate index
     print 5, gradeindex;                                ! print but truncate grade index
+    print *, " "
 
 end program reader
 
 subroutine read_file( string, counter ) 
 
-    character (LEN=*) :: string
+    character (LEN=20) :: string
     integer :: counter
     character (LEN=1) :: input
 
-    open (unit=5,status="old",access="direct",form="unformatted",recl=1,file="KJV.txt") ! open the file
+    call getarg(1, string)      ! get filename from command line arg and put it in the string 
+    open (unit=5,status="old",access="direct",form="unformatted",recl=1,file=string) ! open the file
+    print *, ""
+    print *, "File being used: ", string        ! print what file is being scanned
     counter=1
     100 read (5,rec=counter,err=200) input      ! read the file
     string(counter:counter) = input             

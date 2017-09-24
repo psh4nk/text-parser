@@ -47,6 +47,7 @@ my $index = 206.835 - ($sylcount / $wordcount) * 84.6 - ($wordcount / $sentcount
 my $grade = ($sylcount / $wordcount) * 11.8 + ($wordcount / $sentcount) * 0.39 - 15.59;     # set grade level
 
 # print the stuff
+printf "\n\tFILE BEING USED: $file\t\n";
 printf "\n\tFLESCH READABILITY INDEX:\t\n";
 printf "\tIndex = %d \t\n\n", $index;
 printf "\tFLESCH-KINCAID GRADE LEVEL INDEX:\t\n";

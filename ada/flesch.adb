@@ -1,6 +1,8 @@
 with Ada.Text_IO;
 with Ada.Float_Text_IO;
-use Ada.Text_IO; 
+use Ada.Text_IO;
+with Ada.Command_Line;
+use Ada.Command_Line;
 with Ada.IO_Exceptions; 
 use Ada.IO_Exceptions; 
 
@@ -19,8 +21,9 @@ procedure flesch is
 
 begin 
 
-    -- Open the file:
-    Ada.Text_IO.Open (File => In_File, Mode => Ada.Text_IO.In_File, Name => "KJV.txt");
+    -- Open the file using command line argument:
+    Ada.Text_IO.Open (File => In_File, Mode => Ada.Text_IO.In_File, Name => Ada.Command_Line.Argument(1) );
+
 
     -- set length of position by incrementing through the file char by char
     pos := 0;
@@ -128,6 +131,7 @@ exception
     --Ada.Text_IO.Put_Line( Item => "Words: " & float'Image(wordcount));        -- uncomment to include word count in output
     --Ada.Text_IO.Put_Line( Item => "Sentences: " & float'Image(sentcount));    -- uncomment to include sentence count in output 
     --Ada.Text_IO.Put_Line( Item => "Syllables: " & float'Image(sylcount));      -- uncomment to include syllable count in output
+    Ada.Text_IO.Put_Line( Item => "File being used: " & Ada.Command_Line.Argument(1));
     Ada.Text_IO.Put_Line( Item => "Index: " & Integer'Image(index));
     Ada.Text_IO.Put( Item => "Grade Index: "); 
     Ada.Float_Text_IO.Put( Item => float'Truncation(gradeindex), Fore => 4, Aft => 1, Exp => 0);

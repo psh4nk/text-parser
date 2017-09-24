@@ -1,11 +1,11 @@
 To compile and run:
 
     c++ flesch.cpp
-    
     ./a.out
         
-        OR
+    OR
 
+    c++ flesch.cpp
     ./a.out [FILENAME]
 
 
