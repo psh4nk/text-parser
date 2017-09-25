@@ -127,9 +127,9 @@ exception
     gradeindex :=   float((sylcount / wordcount) * 11.8 + (wordcount / sentcount) * 0.39 - 15.59);      -- calculate grade index
 
     Ada.Text_IO.New_Line;
-    Ada.Text_IO.Put_Line( Item => "Words: " & float'Image(wordcount));        -- uncomment to include word count in output
-    Ada.Text_IO.Put_Line( Item => "Sentences: " & float'Image(sentcount));    -- uncomment to include sentence count in output 
-    Ada.Text_IO.Put_Line( Item => "Syllables: " & float'Image(sylcount));      -- uncomment to include syllable count in output
+    --Ada.Text_IO.Put_Line( Item => "Words: " & float'Image(wordcount));        -- uncomment to include word count in output
+    --Ada.Text_IO.Put_Line( Item => "Sentences: " & float'Image(sentcount));    -- uncomment to include sentence count in output 
+    --Ada.Text_IO.Put_Line( Item => "Syllables: " & float'Image(sylcount));      -- uncomment to include syllable count in output
     Ada.Text_IO.Put_Line( Item => "File being used: " & Ada.Command_Line.Argument(1));
     Ada.Text_IO.Put_Line( Item => "Index: " & Integer'Image(index));
     Ada.Text_IO.Put( Item => "Grade Index: "); 
