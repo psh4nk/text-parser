@@ -132,13 +132,13 @@ double getAlpha(string filename, vector<string> wordArr){
     while(getline(infile, temp, ' ')){
         // delimit getline with a ' '
         stringstream ss(temp);      // create a stringstream for the current string temp
-        while(getline(ss, temp, '\n')) 
+        while(getline(ss, temp, '\n')){ 
             if(!isNum(temp)){               // make sure temp isn't a number
                 wordArr.push_back(temp);    // push temp into wordArr
                 count++;                    // inc count
             }   
         }
-    //}
+    }
     syllables = countSyllables(sCount, wordArr); // get the syllable count
     alpha = syllables / count;                   // calculate alpha 
     return alpha;
@@ -185,3 +185,7 @@ int main(int argc, char *argv[]){
     cout << "Grade Level Index = " << gindex << "\n";                           // print grade index
     return 0;
 }
+
+
+
+

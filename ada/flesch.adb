@@ -23,20 +23,19 @@ begin
 
     -- Open the file using command line argument:
     Ada.Text_IO.Open (File => In_File, Mode => Ada.Text_IO.In_File, Name => Ada.Command_Line.Argument(1) );
-
-
+    
     -- set length of position by incrementing through the file char by char
     pos := 0;
     while not Ada.Text_IO.End_Of_File(In_File) loop
-        Ada.Text_IO.Get(File => In_File, Item => value);
-        pos := pos + 1;
-        string_array(pos) := value;
+       Ada.Text_IO.Get(File => In_File, Item => value);
+       pos := pos + 1;
+       string_array(pos) := value;
     end loop;
-
+    
     -- will hit eof, so handle exception:
 exception
     when Ada.IO_Exceptions.END_ERROR => Ada.Text_IO.Close(File => In_File);
-
+  
     -- Count words:
     wordcount := 0.0; 
     for i in 1..pos
@@ -128,9 +127,9 @@ exception
     gradeindex :=   float((sylcount / wordcount) * 11.8 + (wordcount / sentcount) * 0.39 - 15.59);      -- calculate grade index
 
     Ada.Text_IO.New_Line;
-    --Ada.Text_IO.Put_Line( Item => "Words: " & float'Image(wordcount));        -- uncomment to include word count in output
-    --Ada.Text_IO.Put_Line( Item => "Sentences: " & float'Image(sentcount));    -- uncomment to include sentence count in output 
-    --Ada.Text_IO.Put_Line( Item => "Syllables: " & float'Image(sylcount));      -- uncomment to include syllable count in output
+    Ada.Text_IO.Put_Line( Item => "Words: " & float'Image(wordcount));        -- uncomment to include word count in output
+    Ada.Text_IO.Put_Line( Item => "Sentences: " & float'Image(sentcount));    -- uncomment to include sentence count in output 
+    Ada.Text_IO.Put_Line( Item => "Syllables: " & float'Image(sylcount));      -- uncomment to include syllable count in output
     Ada.Text_IO.Put_Line( Item => "File being used: " & Ada.Command_Line.Argument(1));
     Ada.Text_IO.Put_Line( Item => "Index: " & Integer'Image(index));
     Ada.Text_IO.Put( Item => "Grade Index: "); 
