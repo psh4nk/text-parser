@@ -179,7 +179,7 @@ public class flesch
         for(int i = 0; i < wordArr.size(); i++){
             syllables+=((double)countSyllables(wordArr.get(i)));    // add the int returned from the syllables method to the syllable count
         }
-        alpha = syllables / count; 
+        alpha = syllables / count;
         return alpha;
     }
 
